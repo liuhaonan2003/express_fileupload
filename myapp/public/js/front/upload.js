@@ -102,11 +102,24 @@
             }, function (data) {
                 if (data.status) {
                     $('#' + file.id).find('p.state').text('已上传');
-                    $('#' + file.id).find('.progress-bar').css({
-                        'background-image': 'url(' + data.url + ')',
-                        'background-size': 'cover',
-                        'background-repeat': 'no-repeat'
-                    });
+                    //window.parent.tmpAlert(data.url);
+                    $.post('http://ym.youngmaker.cn/index.php?s=/home/bigfile/upload.html', {
+                        'filename': data.filename,
+                        'path': data.path,
+                        'name': data.name,
+                        'sig': data.sig,
+                    }, function (data_res) {
+                        if(data_res.result){
+                            $('#' + file.id).find('p.state').text('已上传并注册');
+                        }else{
+                            $('#' + file.id).find('p.state').text('已上传并注册失败');
+                        }
+                    }, 'json');
+                    // $('#' + file.id).find('.progress-bar').css({
+                    //     'background-image': 'url(' + data.url + ')',
+                    //     'background-size': 'cover',
+                    //     'background-repeat': 'no-repeat'
+                    // });
                 } else {
                     $('#' + file.id).find('p.state').text('上传错误!');
                 }

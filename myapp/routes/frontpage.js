@@ -143,6 +143,10 @@ router.get('/upload', function (req, res, next) {
 
             return res.json({
                 'status': 1,
+                'filename': fileName,
+                'path': path,
+                'name': encodeURIComponent(name),
+                'sig': sig,
                 'url': [
                     'http://127.0.0.1:6888',
                     'file', fileName,
